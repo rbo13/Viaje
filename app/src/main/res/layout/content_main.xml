@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin_s"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainActivity"
+    tools:showIn="@layout/activity_main"
+    android:orientation="vertical"
+    android:background="@color/app_color">
+
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/to_map_button_id"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/see_map_hint"
+        android:textColorHint="#ffffff"
+        android:background="@drawable/rounded_button"
+        android:layout_below="@+id/to_profile_button_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/to_assistance_button_id"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/assistance_hint"
+        android:textColorHint="#ffffff"
+        android:background="@drawable/rounded_button"
+        android:layout_below="@+id/to_map_button_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/to_announcement"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/view_announcements"
+        android:textColorHint="#ffffff"
+        android:background="@drawable/rounded_button"
+        android:layout_below="@+id/to_assistance_button_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/emergency_button_id"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/emergency_color"
+        android:textColor="#ffffff"
+        android:text="@string/emergency_hint"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/logout_button"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/action_logout"
+        android:textColorHint="#ffffff"
+        android:background="@drawable/rounded_button"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profilePic"
+        android:layout_width="@dimen/activity_horizontal_margin_xlg"
+        android:layout_height="@dimen/activity_vertical_margin_xlg"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#FF000000"
+        android:src="@drawable/default_profile"
+        android:layout_below="@+id/logout_button"
+        android:layout_alignLeft="@+id/to_profile_button_id"
+        android:layout_alignStart="@+id/to_profile_button_id"
+        android:layout_marginTop="@dimen/activity_vertical_margin" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/to_profile_button_id"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/go_to_your_profile_hint"
+        android:textColorHint="#ffffff"
+        android:background="@drawable/rounded_button"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/profilePic"
+        android:layout_alignLeft="@+id/to_map_button_id"
+        android:layout_alignStart="@+id/to_map_button_id" />
+
+</RelativeLayout>

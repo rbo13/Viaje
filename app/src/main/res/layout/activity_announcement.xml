@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AnnouncementActivity"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin_md">
+
+
+    <!--<ListView-->
+    <!--android:id="@android:id/list"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
+
+    <!--</ListView>-->
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/announcements"
+        android:textColor="@color/app_color"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="@dimen/font_size_default_m"/>
+
+    <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:stretchColumns="1"
+    android:padding="@dimen/activity_horizontal_margin_s">
+
+        <TextView
+        android:id="@+id/timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/app_color"
+        android:textSize="@dimen/font_size_default"
+        android:textColor="@color/colorPrimary"/>
+
+        <TextView
+        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_horizontal_margin_s"
+        android:paddingLeft="@dimen/activity_horizontal_margin_s" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_gravity="center"
+            android:foregroundGravity="center"
+            android:gravity="center"/>
+
+    </TableLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -719,7 +719,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private String getDate(long time) {
         Date date = new Date(time);
-        Format format = new SimpleDateFormat("MMM dd, yyyy - hh:mm a");
+        Format format = new SimpleDateFormat("hh:mm a");
         return format.format(date);
     }
 

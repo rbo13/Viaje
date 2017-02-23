@@ -699,7 +699,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     dbRef.child(ViajeConstants.POSTS_KEY).push().setValue(post);
 
-                    Snackbar snackbar = Snackbar.make(relativeLayout, "Thanks for showing your concern..", Snackbar.LENGTH_LONG);
+                    Snackbar snackbar = Snackbar.make(relativeLayout, "Thanks for the concern..", Snackbar.LENGTH_LONG);
                     View sbView = snackbar.getView();
                     TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
                     textView.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.app_color));

@@ -12,6 +12,7 @@ public class Emergency {
     private double longitude;
     private String description;
     private String safezoneType;
+    private Long timestamp;
 
 
     public Emergency() {  }
@@ -71,5 +72,13 @@ public class Emergency {
 
     public void setSafezoneType(String safezoneType) {
         this.safezoneType = safezoneType;
+    }
+
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
     }
 }

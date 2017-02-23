@@ -22,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -125,7 +127,6 @@ public class SignUpActivity extends AppCompatActivity {
 
                                 saveUserInfo(latitude, longitude);
 
-
                                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -152,14 +153,14 @@ public class SignUpActivity extends AppCompatActivity {
         OnlineUser onlineUser = new OnlineUser();
 
         //Get timestamp
-        Long timestamp_long = System.currentTimeMillis() / 1000;
-        final String timestamp = timestamp_long.toString();
+        long millis = new Date().getTime();
 
 
         String user_name = username.getText().toString().trim();
         String email = emailEditText.getText().toString().trim();
         String familyName = family_name.getText().toString().trim();
         String givenName = given_name.getText().toString().trim();
+        String full_name = givenName+", "+familyName;
         String contactNumber = contact_number.getText().toString().trim();
         String user_address = address.getText().toString().trim();
         String licenseNumber = license_number.getText().toString().trim();
@@ -173,6 +174,7 @@ public class SignUpActivity extends AppCompatActivity {
         motorist.setFamily_name(familyName);
         motorist.setEmail_address(email);
         motorist.setGiven_name(givenName);
+        motorist.setFull_name(full_name);
         motorist.setContact_number(contactNumber);
         motorist.setAddress(user_address);
         motorist.setLicense_number(licenseNumber);
@@ -186,23 +188,24 @@ public class SignUpActivity extends AppCompatActivity {
         //Save to online_users.
         onlineUser.setLatitude(latitude);
         onlineUser.setLongitude(longitude);
-        onlineUser.setTimestamp(timestamp);
+        onlineUser.setTimestamp(millis);
         onlineUser.setMotorist(motorist);
         dbRef.child(ViajeConstants.ONLINE_USERS_KEY).push().setValue(onlineUser);
         /**
          * Save motorist to Shared Preference.
          */
-        saveToSharedPreference(email, familyName, givenName, contactNumber, user_address, plateNumber);
+        saveToSharedPreference(email, familyName, givenName, contactNumber, user_address, plateNumber, user_name);
 
         Toast.makeText(this, "Information Saved...", Toast.LENGTH_LONG).show();
     }
 
-    private void saveToSharedPreference(String email, String familyName, String givenName, String contactNumber, String user_address, String plateNumber) {
+    private void saveToSharedPreference(String email, String familyName, String givenName, String contactNumber, String user_address, String plateNumber, String username) {
         SharedPreferences sharedPreferences = getSharedPreferences("motoristInfo", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("email", email);
         editor.putString("plate_number", plateNumber);
         editor.putString("given_name", givenName);
+        editor.putString("username", username);
         editor.putString("family_name", familyName);
         editor.putString("full_name", givenName + ", " + familyName);
         editor.putString("contact_number", contactNumber);

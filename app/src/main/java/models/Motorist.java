@@ -12,6 +12,7 @@ public class Motorist {
     private String email_address;
     private String family_name;
     private String given_name;
+    private String full_name;
     private String contact_number;
     private String address;
     private String license_number;
@@ -24,12 +25,13 @@ public class Motorist {
 
     public Motorist() {  }
 
-    public Motorist(String motorist_id, String username, String email_address, String family_name, String given_name, String contact_number, String address, String license_number, String vehicle_information_model_year, String vehicle_information_plate_number, String vehicle_information_vehicle_type, String type, String profile_pic, String key) {
+    public Motorist(String motorist_id, String username, String email_address, String family_name, String given_name, String full_name, String contact_number, String address, String license_number, String vehicle_information_model_year, String vehicle_information_plate_number, String vehicle_information_vehicle_type, String type, String profile_pic, String key) {
         this.motorist_id = motorist_id;
         this.username = username;
         this.email_address = email_address;
         this.family_name = family_name;
         this.given_name = given_name;
+        this.full_name = full_name;
         this.contact_number = contact_number;
         this.address = address;
         this.license_number = license_number;
@@ -78,6 +80,14 @@ public class Motorist {
 
     public void setGiven_name(String given_name) {
         this.given_name = given_name;
+    }
+
+    public String getFull_name() {
+        return full_name;
+    }
+
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
     }
 
     public String getContact_number() {

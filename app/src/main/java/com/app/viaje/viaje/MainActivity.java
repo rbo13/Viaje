@@ -41,6 +41,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -265,6 +266,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         SharedPreferences sharedPreferences = getSharedPreferences("motoristInfo", Context.MODE_PRIVATE);
         locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
+        long millis = new Date().getTime();
+
         String email = sharedPreferences.getString("email", "");
 
         gps = new GPSTracker(MainActivity.this);
@@ -281,9 +284,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             emergency.setStatus("pending");
             emergency.setLatitude(latitude);
             emergency.setLongitude(longitude);
+            emergency.setTimestamp(millis);
             emergency.setSafezoneType(safezoneType);
 
             dbRef.child(ViajeConstants.EMERGENCIES_KEY).push().setValue(emergency);
+
+            Snackbar snackbar = Snackbar.make(coordinatorLayout, "Help is coming..", Snackbar.LENGTH_LONG);
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.RED);
+
+            snackbar.show();
             //Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
 
         }else{

@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Date;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import helpers.ViajeConstants;
@@ -106,6 +108,7 @@ public class AssistanceActivity extends AppCompatActivity {
 
             double latitude = gps.getLatitude();
             double longitude = gps.getLongitude();
+            long millis = new Date().getTime();
 
             Emergency emergency = new Emergency();
 
@@ -114,6 +117,7 @@ public class AssistanceActivity extends AppCompatActivity {
             emergency.setStatus("pending");
             emergency.setLatitude(latitude);
             emergency.setLongitude(longitude);
+            emergency.setTimestamp(millis);
             emergency.setSafezoneType(safezoneType);
 
             dbRef.child(ViajeConstants.EMERGENCIES_KEY).push().setValue(emergency);

@@ -34,6 +34,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -168,8 +169,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
     private void saveOnlineUserToFirebase(final double latitude, final double longitude) {
 
         //Get timestamp
-        Long timestamp_long = System.currentTimeMillis() / 1000;
-        final String timestamp = timestamp_long.toString();
+        final long millis = new Date().getTime();
 
         //Get the login user from firebase.
         String email_address = emailField.getText().toString().trim();
@@ -195,7 +195,7 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
 
                     onlineUser.setLatitude(latitude);
                     onlineUser.setLongitude(longitude);
-                    onlineUser.setTimestamp(timestamp);
+                    onlineUser.setTimestamp(millis);
                     onlineUser.setMotorist(motorist);
 
                     dbRef.child(ViajeConstants.ONLINE_USERS_KEY).push().setValue(onlineUser);

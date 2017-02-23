@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.net.ParseException;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,13 +44,16 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -381,7 +386,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                             Object key = myEntry.getKey();
                                             Post.Comment value = (Post.Comment) myEntry.getValue();
                                             String commenter = value.getUser().getUsername();
-                                            String dateTime = getDate(String.valueOf(value.getTimestamp()));
+                                            String dateTime = getDate(value.getTimestamp());
+                                            //String dateTime = new Date(value.getTimestamp());
 
                                             sb.append(commenter + " on "+ dateTime + "\n \t \t" + value.getText());
                                             sb.append("\n \n");
@@ -548,7 +554,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     String imageUrl = advertisement.getImg();
                     String text = advertisement.getText();
                     String title = advertisement.getTitle();
-                    String timestamp = getDate(String.valueOf(advertisement.getTimestamp()));
+                    String timestamp = getDate(advertisement.getTimestamp());
 
                     adText.setText(text);
                     adTime.setText(timestamp);
@@ -574,17 +580,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     private void postComment(final String commentText, Object key) {
 
+        Snackbar snackbar = Snackbar.make(relativeLayout, "Thanks for the comment...", Snackbar.LENGTH_LONG);
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.app_color));
+        snackbar.show();
+
         final Motorist user = new Motorist();
 
         //Get timestamp
-        final Long timestamp_long = System.currentTimeMillis() / 1000;
-        final String timestamp = timestamp_long.toString();
+        long millis = new Date().getTime();
 
         SharedPreferences sharedPreferences = getSharedPreferences("motoristInfo", Context.MODE_PRIVATE);
 
         //Store the data from SharedPreference to Motorist object.
         user.setAddress(sharedPreferences.getString("address", ""));
         user.setContact_number(sharedPreferences.getString("contact_number", ""));
+        user.setUsername(sharedPreferences.getString("username", ""));
         user.setEmail_address(sharedPreferences.getString("email", ""));
         user.setFamily_name(sharedPreferences.getString("family_name", ""));
         user.setGiven_name(sharedPreferences.getString("given_name", ""));
@@ -598,11 +610,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Post.Comment postComment = new Post.Comment();
 
         postComment.setText(commentText);
-        postComment.setTimestamp(timestamp_long);
+        postComment.setTimestamp(millis);
         postComment.setUser(user);
 
         dbRef.child(ViajeConstants.POSTS_KEY+"/"+key+"/comments").push().setValue(postComment);
-
     }
 
     /**
@@ -649,8 +660,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void sendThePostToFirebase(final String text) {
 
         //Get timestamp
-        final Long timestamp_long = System.currentTimeMillis() / 1000;
-        final String timestamp = timestamp_long.toString();
+        final long millis = new Date().getTime();
 
         //Shared Preference of Motorist.
         SharedPreferences sharedPreferences = getSharedPreferences("motoristInfo", Context.MODE_PRIVATE);
@@ -684,10 +694,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     post.setLat(latitude);
                     post.setLng(longitude);
                     post.setText(text);
-                    post.setTimestamp(timestamp_long);
+                    post.setTimestamp(millis);
                     post.setUser(motorist);
 
                     dbRef.child(ViajeConstants.POSTS_KEY).push().setValue(post);
+
+                    Snackbar snackbar = Snackbar.make(relativeLayout, "Thanks for showing your concern..", Snackbar.LENGTH_LONG);
+                    View sbView = snackbar.getView();
+                    TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+                    textView.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.app_color));
+                    snackbar.show();
                 }
 
             }
@@ -701,14 +717,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    private String getDate(String time) {
-        long dv = Long.valueOf(time)*1000;// its need to be in milisecond
-        Date df = new java.util.Date(dv);
-        String stringDate = new SimpleDateFormat("hh:mm a").format(df);
-
-        return stringDate;
-
+    private String getDate(long time) {
+        Date date = new Date(time);
+        Format format = new SimpleDateFormat("MMM dd, yyyy - hh:mm a");
+        return format.format(date);
     }
+
 
     /**
      * @description :: Creates the circle in the map

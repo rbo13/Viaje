@@ -10,12 +10,12 @@ public class OnlineUser {
 
     private double latitude;
     private double longitude;
-    private String timestamp;
+    private Long timestamp;
     private Motorist motorist;
 
     public OnlineUser() {  }
 
-    public OnlineUser(double latitude, double longitude, String timestamp, Motorist motorist) {
+    public OnlineUser(double latitude, double longitude, Long timestamp, Motorist motorist) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.timestamp = timestamp;
@@ -38,11 +38,11 @@ public class OnlineUser {
         this.longitude = longitude;
     }
 
-    public String getTimestamp() {
+    public Long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
 

@@ -87,13 +87,13 @@ public class ProfileActivity extends AppCompatActivity {
 
     @BindView(R.id.full_name_text_id) TextView full_name_text;
     @BindView(R.id.plate_number_text_id) TextView plate_number_text;
-    @BindView(R.id.email_text_id) TextView email_text;
+    //@BindView(R.id.email_text_id) TextView email_text;
     @BindView(R.id.contact_number_text_id) TextView contact_number_text;
     @BindView(R.id.address_text_id) TextView address_text;
 
     @BindView(R.id.update_full_name_edit) EditText fullNameUpdate;
     @BindView(R.id.update_plate_number_edit) EditText plateNumberUpdate;
-    @BindView(R.id.update_email_edit) EditText emailUpdate;
+    //@BindView(R.id.update_email_edit) EditText emailUpdate;
     @BindView(R.id.update_contact_edit) EditText contactNumberUpdate;
     @BindView(R.id.update_address_edit) EditText addressUpdate;
 
@@ -208,11 +208,12 @@ public class ProfileActivity extends AppCompatActivity {
          */
         fullNameUpdate.setVisibility(View.GONE);
         plateNumberUpdate.setVisibility(View.GONE);
-        emailUpdate.setVisibility(View.GONE);
+        //emailUpdate.setVisibility(View.GONE);
         contactNumberUpdate.setVisibility(View.GONE);
         addressUpdate.setVisibility(View.GONE);
 
         SharedPreferences sharedPreferences = getSharedPreferences("motoristInfo", Context.MODE_PRIVATE);
+
 
         String email_address = sharedPreferences.getString("email", "");
         String full_name = sharedPreferences.getString("full_name", "");
@@ -245,9 +246,9 @@ public class ProfileActivity extends AppCompatActivity {
                             Log.d("IMAGE_URL: ", imageUrl);
 
                             //Display to TextView.
-                            full_name_text.setText(motorist.getGiven_name()+", "+motorist.getFamily_name());
+                            full_name_text.setText(motorist.getFull_name());
                             plate_number_text.setText(motorist.getVehicle_information_plate_number());
-                            email_text.setText(motorist.getEmail_address());
+                            //email_text.setText(motorist.getEmail_address());
                             contact_number_text.setText(motorist.getContact_number());
                             address_text.setText(motorist.getAddress());
 
@@ -412,7 +413,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void editProfile() {
 
-        SharedPreferences sharedPreferences = getSharedPreferences("motoristInfo", Context.MODE_PRIVATE);
+        final SharedPreferences sharedPreferences = getSharedPreferences("motoristInfo", Context.MODE_PRIVATE);
         String email_address = sharedPreferences.getString("email", "");
 
         final Query queryRef = dbRef.child(ViajeConstants.USERS_KEY)
@@ -425,18 +426,16 @@ public class ProfileActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-
                     String key = "";
 
                     for (DataSnapshot nodeDataSnapshot : dataSnapshot.getChildren()){
                         key = nodeDataSnapshot.getKey();
                     }
 
-
                     HashMap<String, Object> update_profile = new HashMap<>();
                     update_profile.put("full_name", fullNameUpdate.getText().toString().trim());
                     update_profile.put("vehicle_information_plate_number", plateNumberUpdate.getText().toString().trim());
-                    update_profile.put("email_address", emailUpdate.getText().toString().trim());
+                    //update_profile.put("email_address", emailUpdate.getText().toString().trim());
                     update_profile.put("contact_number", contactNumberUpdate.getText().toString().trim());
                     update_profile.put("address", addressUpdate.getText().toString().trim());
                     queryRef.getRef().child(key).updateChildren(update_profile);
@@ -445,9 +444,7 @@ public class ProfileActivity extends AppCompatActivity {
                     View sbView = snackbar.getView();
                     TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
                     textView.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.app_color));
-
                     snackbar.show();
-
                 }
 
                 @Override
@@ -479,14 +476,14 @@ public class ProfileActivity extends AppCompatActivity {
         saveProfile.setVisibility(View.VISIBLE);
         fullNameUpdate.setVisibility(View.VISIBLE);
         plateNumberUpdate.setVisibility(View.VISIBLE);
-        emailUpdate.setVisibility(View.VISIBLE);
+        //emailUpdate.setVisibility(View.VISIBLE);
         contactNumberUpdate.setVisibility(View.VISIBLE);
         addressUpdate.setVisibility(View.VISIBLE);
 
         updateProfile.setVisibility(View.INVISIBLE);
         full_name_text.setVisibility(View.INVISIBLE);
         plate_number_text.setVisibility(View.INVISIBLE);
-        email_text.setVisibility(View.INVISIBLE);
+        //email_text.setVisibility(View.INVISIBLE);
         contact_number_text.setVisibility(View.INVISIBLE);
         address_text.setVisibility(View.INVISIBLE);
 
@@ -502,7 +499,7 @@ public class ProfileActivity extends AppCompatActivity {
         //Display to TextView.
         fullNameUpdate.setText(full_name);
         plateNumberUpdate.setText(plate_number);
-        emailUpdate.setText(email_address);
+        //emailUpdate.setText(email_address);
         contactNumberUpdate.setText(contact_number);
         addressUpdate.setText(address);
 
@@ -510,11 +507,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     @OnClick(R.id.save_profile_button)
     void onSaveProfile() {
-        Toast.makeText(ProfileActivity.this, fullNameUpdate.getText().toString(), Toast.LENGTH_SHORT).show();
-
         SharedPreferences sharedPreferences = getSharedPreferences("motoristInfo", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("email", emailUpdate.getText().toString());
+       //editor.putString("email", emailUpdate.getText().toString());
         editor.putString("plate_number", plateNumberUpdate.getText().toString());
         editor.putString("full_name", fullNameUpdate.getText().toString());
         editor.putString("contact_number", contactNumberUpdate.getText().toString());
@@ -524,21 +519,21 @@ public class ProfileActivity extends AppCompatActivity {
         saveProfile.setVisibility(View.INVISIBLE);
         fullNameUpdate.setVisibility(View.INVISIBLE);
         plateNumberUpdate.setVisibility(View.INVISIBLE);
-        emailUpdate.setVisibility(View.INVISIBLE);
+        //emailUpdate.setVisibility(View.INVISIBLE);
         contactNumberUpdate.setVisibility(View.INVISIBLE);
         addressUpdate.setVisibility(View.INVISIBLE);
 
         updateProfile.setVisibility(View.VISIBLE);
         full_name_text.setVisibility(View.VISIBLE);
         plate_number_text.setVisibility(View.VISIBLE);
-        email_text.setVisibility(View.VISIBLE);
+        //email_text.setVisibility(View.VISIBLE);
         contact_number_text.setVisibility(View.VISIBLE);
         address_text.setVisibility(View.VISIBLE);
 
         //Display to TextView.
         full_name_text.setText(fullNameUpdate.getText().toString());
         plate_number_text.setText(plateNumberUpdate.getText().toString());
-        email_text.setText(emailUpdate.getText().toString());
+        //email_text.setText(emailUpdate.getText().toString());
         contact_number_text.setText(contactNumberUpdate.getText().toString());
         address_text.setText(addressUpdate.getText().toString());
 

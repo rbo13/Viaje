@@ -561,7 +561,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     adTitle.setText(title);
                     shop_name.setText(sz.getShop_name());
 
-                    Picasso.with(getApplicationContext()).load(imageUrl).into(ads_image);
+                    if(imageUrl != null) {
+                        Picasso.with(getApplicationContext()).load(imageUrl).into(ads_image);
+                    }
                 }
 
             }

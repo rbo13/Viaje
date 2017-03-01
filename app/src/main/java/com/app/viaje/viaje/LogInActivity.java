@@ -136,7 +136,6 @@ public class LogInActivity extends AppCompatActivity implements GoogleApiClient.
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("email", motorist.getEmail_address());
                     editor.putString("username", motorist.getUsername());
-                    editor.putString("given_name", motorist.getGiven_name());
                     editor.putString("family_name", motorist.getFamily_name());
                     editor.putString("given_name", motorist.getGiven_name());
                     editor.putString("license_number", motorist.getLicense_number());

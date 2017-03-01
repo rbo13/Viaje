@@ -216,7 +216,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         String email_address = sharedPreferences.getString("email", "");
-        String full_name = sharedPreferences.getString("full_name", "");
+        final String full_name = sharedPreferences.getString("full_name", "");
         String plate_number = sharedPreferences.getString("plate_number", "");
         String contact_number = sharedPreferences.getString("contact_number", "");
         String profile_pic = sharedPreferences.getString("profile_pic", "");
@@ -246,7 +246,11 @@ public class ProfileActivity extends AppCompatActivity {
                             Log.d("IMAGE_URL: ", imageUrl);
 
                             //Display to TextView.
-                            full_name_text.setText(motorist.getFull_name());
+                            if(motorist.getFull_name() != null) {
+                                full_name_text.setText(motorist.getFull_name());
+                            }else {
+                                full_name_text.setText(full_name);
+                            }
                             plate_number_text.setText(motorist.getVehicle_information_plate_number());
                             //email_text.setText(motorist.getEmail_address());
                             contact_number_text.setText(motorist.getContact_number());

@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                             String profile_pic = motorist.getProfile_pic();
                             String email = motorist.getEmail_address();
 
-                            imageCache.put(email, profile_pic);
+//                            imageCache.put(email, profile_pic);
                             Picasso.with(getApplicationContext()).load(profile_pic).into(profilePic);
                         }
                     }
